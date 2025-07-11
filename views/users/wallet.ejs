@@ -1,0 +1,291 @@
+<%- include("../layouts/header.ejs")%> 
+<div class="page-wrapper">
+  <%- include("../layouts/userNavbar.ejs")%>
+
+
+  <main class="main">
+    <div
+      class="page-header text-center"
+      style="background-image: url('/static/assets/images/page-header-bg.jpg')"
+    >
+      <div class="container ">
+        <h1 class="page-title">All Wallet<span>Wallet</span></h1>
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home">Home</a></li>
+          <li class="breadcrumb-item"><a href="/allproducts">Profile</a></li>
+          <li class="breadcrumb-item active" aria-current="page">All Wallet</li>
+        </ol>
+      </div>
+      <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
+    <div class="container">
+      <div class="row justify-content-center">
+    
+        <div class="col-12 d-flex justify-content-center flex-lg-row flex-column">
+          <!-- First Div -->
+          <div class="mr-lg-4 mb-3 col-lg-4 mb-lg-0 bg-primary d-flex wallet-front align-items-end">
+            <div class="ml-lg-5 ml-3">
+              <p type="button" class="" data-toggle="modal" data-target="#scrollableModal">
+                Referred Users
+              </p>
+              <h6>Total Amount</h6>
+              <h1><%=walletData?.totalAmount%></h1>
+            </div>
+          </div>
+    
+          <!-- Second Div -->
+          <div class=" wallet-back col-lg-4 p-3 p-lg-5 mt-1 mt-lg-0 pt-3">
+            <form id="change-email-form">
+              <input
+                type="number"
+                class="form-control mb-3"
+                id="walletamount"
+                name="walletamount"
+                placeholder="Add Amount in Wallet"
+              />
+          
+              <button
+                type="button"
+                id="change-email-submit"
+                class="btn btn-light"
+                onclick="addAmountToWallet()"
+              >
+                <span>Add Amount</span>
+                <i class="icon-long-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      
+<style>
+  .scrollable-column {
+    max-height: 400px; /* Set the maximum height for scrollbars */
+    overflow-y: auto; /* Add vertical scrollbar if content exceeds max height */
+  }
+</style>
+
+<div class="row mt-5 scrollable-column m-5 justify-content-center">
+  <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+    <table class="table wallet-table table-striped">
+      <thead>
+        <tr>
+          <th scope="col" class="d-none d-lg-table-cell"></th>
+          <th scope="col"><span class="d-none d-md-inline">TXN</span> Id</th>
+          <th scope="col"><span class="d-none d-md-inline">TXN</span>Date</th>
+          <th scope="col"><span class="d-none d-md-inline">TXN</span> Type</th>
+          <th scope="col"> <span class="d-none d-md-inline">TXN</span> Details</th>
+          <th scope="col"><span class="d-none d-md-inline">TXN</span> Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (walletData?.walletHistory?.length !== 0) {
+          // Sort transactions in descending order based on transactionDate
+          const sortedTransactions = walletData.walletHistory.sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate));
+      
+          sortedTransactions.forEach((transaction, index) => { %>
+            <tr>
+              <td class="d-none d-lg-table-cell d-flex justify-content-center">
+                <img width="40px" src="/static/assets/alert/<%= transaction.transactionDetails === 'Debit' ? 'DEBIT-02.png' : 'CREDIT-02.png' %>" alt="">
+              </td>
+              <td><%= transaction.transactionId %></td>
+              <td><%= new Date(transaction.transactionDate).toLocaleDateString() %></td>
+              <td class="<%= transaction.transactionDetails === 'Debit' ? 'text-danger' : 'text-success' %>">
+                <%= transaction.transactionDetails %>
+              </td>
+              <td><%= transaction.transactionType %></td>
+              <td class="text-center"><strong class="text-primary"><%= transaction.transactionAmount %></strong></td>
+            </tr>
+          <% })
+        } else { %>
+          <td colspan="6">
+            <div
+              class="d-flex flex-column align-items-center justify-content-center"
+            >
+              <i class="fa-regular fa-wallet"></i>
+              <p class="text-center mt-2">No wallet history available</p>
+            </div>
+          </td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+    <!-- End .page-content -->
+  </main>
+</div>
+
+<!-- Scrollable modal -->
+
+<!-- Scrollable Modal -->
+<div class="modal fade" id="scrollableModal" tabindex="-1" role="dialog" aria-labelledby="scrollableModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title " id="scrollableModalLabel">Reffered Users</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if (walletData?.ireffered){ walletData?.ireffered?.forEach((value, index) => {%>
+          <div class="my-3 mx-5 mx-lg-5   wallet-history p-2 px-3">
+            <h4 ><%=value.clientname%></h4>
+          <h6><%= moment(value.createdAt).format('DD/MM/YYYY') %></h6>
+          
+          
+          </div>
+        <% })} %>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- Add more buttons or controls as needed -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End .main -->
+<%- include("../layouts/userFooter.ejs")%>
+<%-include("../layouts/userFooter2.ejs")%>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="path/to/inputSpinnerPlugin.js"></script>
+
+<!-- ... (remaining HTML code) ... -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  function addAmountToWallet() {
+      // Get the form data
+      const walletAmount = document.getElementById('walletamount').value;
+const walletAmountRegex = /^[1-9]\d*(\.\d+)?$/;
+
+if (!walletAmount || !walletAmountRegex.test(walletAmount)) {
+  
+  Swal.fire({
+    title: 'Invalid Amount',
+    text: 'Enter a valid amount',
+    icon: 'error',
+    showConfirmButton: false,
+                timer: 1500
+  });
+}
+
+      const formData = {
+          walletamount: walletAmount
+          // Add more fields if needed
+      };
+
+      // Perform a Fetch API request
+      fetch('/addtowallet', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+              // Add additional headers if needed
+          },
+          body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(response => {
+         if (response.online) {
+       
+        var options = {
+          key: response.key_id,
+          amount: response.amount,
+          currency: "INR",
+          name: "Farado",
+          description: "Test Transaction",
+          image: "/static/logo/favicon.png",
+          order_id: response.order_id,
+          handler: function (res) {
+           
+
+            fetch('/verifywalletonlinepayment', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ response:res,data:response }),
+              })
+
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json(); // Parse the JSON in the response
+            })
+            .then(data => {
+             if (data.online) {
+              window.location.reload();
+             }
+             } )
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+          },
+          prefill: {
+            name: response.name,
+            email: response.email,
+            contact: response.contact,
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        var rzp1 = new Razorpay(options);
+        
+        rzp1.on("payment.failed", function (response) {
+         
+        });
+        rzp1.open();
+       
+      } if (response.noteligible) {
+         
+                Swal.fire({
+                  title: "Error",
+                  text: `Cannot add ${response.amount}. Exceeds wallet limit.`,
+                  icon: "error",
+                  showConfirmButton: false,
+                timer: 1500
+               });
+        } else {
+          alert(err.message);
+        }
+
+    
+      })
+      .catch(error => {
+          // Handle errors
+          console.error('Error:', error);
+      });
+  }
+</script>
+
+
+
+ 
+<%- include("../layouts/footer.ejs")%>

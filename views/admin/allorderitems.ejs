@@ -1,0 +1,169 @@
+<%- include("../layouts/adminHeader.ejs")%>
+<%- include("../layouts/adminSideBar.ejs")%>
+
+<div class="nk-app-root nk-body bg-lighter npc-general has-sidebar">
+  <div class="nk-main">
+    <div class="nk-wrap">
+      <div class="nk-header nk-header-fixed is-light">
+        <div class="container-fluid">
+          <div class="nk-header-wrap">
+            <div class="nk-header-brand d-xl-none">
+              <a href="/admin/dashboard" class="logo-link">
+                <img class="logo-light logo-img" src="/static/admin/images/logo.png" srcset="/demo2/images/logo2x.png 2x" alt="logo" />
+                <img class="logo-dark logo-img" src="/static/admin/images/logo-dark.png" srcset="/demo2/images/logo-dark2x.png 2x" alt="logo-dark" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nk-content">
+        <div class="container-fluid">
+          <div class="nk-content-inner">
+            <div class="nk-content-body">
+
+              <!-- Admin Panel Order List Section -->
+              <div class="nk-block-head nk-block-head-sm">
+                <!-- ... -->
+              </div>
+              <div class="nk-block">
+                <div class="nk-tb-list is-separate is-medium mb-3 ">
+                  <% orders.forEach(function(value,index) { %>
+                    <!-- Order Details Section -->
+                    <div class="container d-flex justify-content-center mb-5 ">
+                      <div class="bg-light col-12 col-md-8 d-flex flex-column pt-5 p-5">
+                        <div class="d-flex align-items-start flex-column mb-3">
+                          <h6>Order Placed</h6>
+                          <!-- Replace with your order details content -->
+                          <p><%= moment(value.order.orderDate).format("DD-MM-YYYY") %></p>
+                          <h6>Delivery Expect On: <strong><%= moment(value.order.deliveryDate).format("DD-MM-YYYY") %></strong></h6>
+                        </div>
+                        <div class="d-flex border-bottom w-100">
+                          <div>
+                            <img src="/static/productsImages/<%= value.productDetails.images.image1 %>" style="width: auto; width: 190px" alt="Image Desc" />
+                          </div>
+                          <div class="ps-5 d-flex align-items-start flex-column">
+                            <h5><%= value.productDetails.productname %></h5>
+                            <p>Qty: <%= value.count %></p>
+                            <p><%= value.paymentStatus %></p>
+                            <h4><%= value.totalprice %></h4>
+
+                           <a >
+                                <button class="btn btn-primary mb-5"><%= value.orderStatus%></button>
+                              </a>
+                          
+                           <div class="d-flex  col-12">
+                            <form id="<%= `orderStatusForm_${index}` %>">
+                              <div class="form-group">
+                                <label for="<%= `newStatus_${index}` %>">New Status:</label>
+                                <select class="form-control" id="<%= `newStatus_${index}` %>" name="newStatus" <%= (value.orderStatus === 'Delivered' || value.orderStatus === 'Returned') ? 'disabled' : '' %>>
+                                  <option value="" disabled selected>Change status</option>
+                                  <option value="Shipped" <%= value.orderStatus === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                                  <option value="Out of Delivery" <%= value.orderStatus === 'Out of Delivery' ? 'selected' : '' %>>Out of Delivery</option>
+                                  <option value="Delivered" <%= value.orderStatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                  <option value="Cancelled" <%= value.orderStatus === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                  <!-- Add more options as needed -->
+                                </select>
+                              </div>
+                      
+                              <div class="form-group">
+                                <button type="submit" class="<%= `btn btn-primary btn-primary_${index}` %>" onclick="changeOrderStatus(event, '<%= value.productDetails._id %>', '<%= value.order.orderId %>', '<%= index %>')" <%= value.orderStatus === 'Delivered' ? 'disabled' : '' %>>Change Status</button>
+                              </div>
+                            </form>
+                        </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End of Order Details Section -->
+                  <% }); %>
+                </div>
+              </div>
+              <!-- End of Admin Panel Order List Section -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+  function changeOrderStatus(event, id, orderId, orderIndex) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the selected value from the dropdown
+    const newStatusElement = document.getElementById(`newStatus_${orderIndex}`);
+    const newStatus = newStatusElement.options[newStatusElement.selectedIndex].value;
+
+    // Perform an AJAX request to update the data
+    updateOrderStatus(orderId, newStatus, id);
+  }
+
+  function updateOrderStatus(orderId, newStatus, id) {
+    // Example: Perform an AJAX request to update the order status
+    fetch("/admin/updateOrderStatus", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ orderId: orderId, newStatus: newStatus, id: id }),
+    })
+    .then(response => response.json())
+.then(data => {
+  if (data.message === "Delivered") {
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Status Changed',
+      text: 'The order status has been updated successfully!',
+      showConfirmButton: false,
+                timer: 1500
+    }).then(()=>window.location.reload())
+      
+    
+ 
+    
+    
+    const dropdown = document.getElementById(`newStatus_${orderIndex}`);
+    const button = document.getElementsByClassName(`btn-primary_${orderIndex}`);
+    button.disabled = true;
+    dropdown.disabled = true;
+   
+  }
+
+  if (data.success) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Status Changed',
+      text: 'The order status has been updated successfully!',
+      showConfirmButton: false,
+                timer: 1500
+    }).then(()=>window.location.reload())
+  } else {
+    Swal.fire({
+      icon: 'error', // Change the icon to 'error'
+      title: 'Error',
+      text: 'There was an error updating the order status. Please try again.',
+      customClass: {
+        popup: 'my-custom-popup-class',
+        title: 'my-custom-title-class',
+        content: 'my-custom-content-class',
+        showConfirmButton: false,
+                timer: 1500
+      },
+    });
+  }
+})
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle the error (e.g., show an error message)
+      });
+  }
+</script>
+
+<script src="/static/admin/assets/js/bundlee5ca.js?ver=3.2.3"></script>
+<script src="/static/admin/assets/js/scriptse5ca.js?ver=3.2.3"></script>
+<script src="/static/admin/assets/js/demo-settingse5ca.js?ver=3.2.3"></script>
+</body>
+</html>

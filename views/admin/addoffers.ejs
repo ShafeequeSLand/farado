@@ -1,0 +1,181 @@
+<%- include("../layouts/adminHeader.ejs")%>
+<%- include("../layouts/adminSideBar.ejs")%>
+
+<div class="nk-content">
+  <div class="container-fluid">
+    <div class="nk-content-inner">
+      <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+          <div class="nk-block-between">
+            <div class="nk-block-head-content">
+              <h3 class="nk-block-title page-title">
+                Offers <span class="text-grey">/ Add Offers</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Your form starts here -->
+        <div class="container-fluid mt-3 col-12">
+          <div class="row">
+            <div class="mx-auto">
+              <div class="card">
+                <div class="card-body">
+                  <form id="addoffer-form">
+                    <div class="row mt-2">
+                      <!-- Offer Name -->
+                      <div class="col-12">
+                        <div class="form-group col-12">
+                          <label for="offername" class="form-label">Offer Name</label>
+                          <input
+                            type="text"
+                            name="offername"
+                            id="offername"
+                            class="form-control"
+                          />
+                          <p class="text-danger" id="offername-error"></p>
+                        </div>
+                      </div>
+
+                      <!-- Datepickers -->
+                      <div class="col-12 d-flex justify-content-between mt-3">
+                        <div class="w-50 me-2">
+                          <div class="form-group">
+                            <label class="form-label">Start Date</label>
+                            <div class="form-control-wrap">
+                              <input type="text" name="createdAt" id="createdAt" class="form-control date-picker" />
+                              <p class="text-danger" id="createdAt-error"></p>
+                            </div>
+                            <div class="form-note">
+                              Date format <code>mm/dd/yyyy</code>
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="w-50">
+                          <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <div class="form-control-wrap">
+                              <input type="text" name="updatedAt" id="updatedAt" class="form-control date-picker" />
+                              <p class="text-danger" id="updatedAt-error"></p>
+                            </div>
+                            <div class="form-note">
+                              Date format <code>mm/dd/yyyy</code>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group col-12">
+                          <label for="percentage" class="form-label">Percentage</label>
+                          <input
+                            type="text"
+                            name="percentage"
+                            id="percentage"
+                            class="form-control"
+                          />
+                          <p class="text-danger" id="percentage-error"></p>
+                        </div>
+                      </div>
+
+                      <!-- Checkbox Block (if needed) -->
+
+                      <!-- Submit Button -->
+                      <div class="col-12 mt-5">
+                        <button type="button" id="addoffer-button" class="btn btn-primary">
+                          <em class="icon ni ni-plus"></em>
+                          <span>Add New</span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display Error Message -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/static/js/adminValidation.js"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const registrationForm = document.getElementById("addoffer-form");
+    const signupButton = document.getElementById("addoffer-button");
+
+    signupButton.addEventListener("click", function () {
+      if (addOffer()) {
+        const formData = serialize(registrationForm);
+   
+
+        fetch("/admin/addoffers", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.success) {
+             
+              Swal.fire({
+                title: "Added Successfully",
+                text: "Your new offer has been added successfully.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            })
+            .then (() =>  window.location.href = "/admin/offers")
+            }
+          })
+          .catch((error) => {
+            // Handle any unexpected errors
+            console.error("Error:", error);
+            // Show a generic error message to the user
+            Swal.fire({
+              title: "Error!",
+              text: "An unexpected error occurred. Please try again later.",
+              icon: "error",
+              showConfirmButton: false,
+                timer: 1500
+            });
+          });
+      }
+    });
+  });
+
+  function serialize(form) {
+    const formData = new FormData(form);
+    const serialized = Array.from(formData)
+      .map((entry) => {
+        return (
+          encodeURIComponent(entry[0]) + "=" + encodeURIComponent(entry[1])
+        );
+      })
+      .join("&");
+
+    return serialized;
+  }
+
+  function handleResponse(data) {}
+</script>
+
+
+<script src="/static/admin/assets/js/bundlee5ca.js?ver=3.2.3"></script>
+<script src="/static/admin/assets/js/scriptse5ca.js?ver=3.2.3"></script>
+<script src="/static/admin/assets/js/demo-settingse5ca.js?ver=3.2.3"></script>

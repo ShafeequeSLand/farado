@@ -1,0 +1,153 @@
+<header class="header">
+  <div class="header-middle sticky-header">
+    <div class="container">
+      <div class="header-left">
+        <button class="mobile-menu-toggler">
+          <span class="sr-only">Toggle mobile menu</span>
+          <i class="icon-bars"></i>
+        </button>
+
+        <a href="/home" class="logo">
+          <img
+            src="/static/assets/images/logo.png"
+            alt="Molla Logo"
+            width="105"
+            height="25"
+          />
+        </a>
+
+        <nav class="main-nav">
+          <ul class="menu sf-arrow">
+            <li class="megamenu-container active">
+              <a href="/home" class="sf-with-ul"><i class="fa-light fa-house"></i> Home</a>
+            </li>
+            <li>
+              <a href="/allproducts" class="sf-with-ul"><i class="fa-brands fa-shopify"></i> Shop</a>
+            </li>
+            <li>
+              <a href="/whishlist" class="sf-with-ul"><i class="fa-sharp fa-regular fa-heart"></i> Whishlist</a>
+            </li>
+            <li>
+              <a href="/allorders" class="sf-with-ul"><i class="fa-light fa-bag-shopping"></i> orders</a>
+            </li>
+            <li>
+              <a href="/wallet" class="sf-with-ul"><i class="fa-solid navbaar fa-wallet"></i> Wallet</a>
+
+             
+            </li>
+          </ul>
+          <!-- End .menu -->
+        </nav>
+        <!-- End .main-nav -->
+      </div>
+      <!-- End .header-left -->
+
+      <div class="header-right ">
+      
+        <!-- End .header-search -->
+
+        <div class="dropdown cart-dropdown ">
+          <a
+            href="#"
+            class="dropdown-toggle"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-display="static"
+          >
+          <% if(user){%>
+            <span class="btn text-primary"><i class="icon-user"></i>My Account</span></a>
+
+          
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="user-card-wrap">
+                  <div class="user-card">
+                      <ul class="user-actions">
+                          <li>
+                              <a href="/profile">
+                                <i class="fa-regular fa-user"></i></i> My Profile
+                              </a>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                              <a href="/allorders">
+                                  <i class="fa-light fa-bag-shopping"></i> Orders
+                              </a>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                              <a onclick="confirmSignOut()">
+                                  <i class="fa-regular fa-arrow-right-from-bracket"></i> Logout
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          
+              <div class="dropdown-cart-action">
+                  <!-- Your shopping cart content goes here -->
+              </div>
+          </div>
+          
+          
+          <!-- End .dropdown-menu -->
+
+          <%}else{%>
+            <a href="/login" ><span class="btn text-primary "><i class="fa-light fa-user mr-2"></i>Login</span></a>
+          <!-- <div class="dropdown-menu dropdown-menu-right">
+            <div class="user-card-wrap">
+              <div class="user-card">
+                <div class="logout-button">
+                  <a href="/login">
+                    <button type="submit" class="btn btn-outline-primary-2">
+                      <span>Login</span>
+                      <i class="icon-long-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-cart-action">
+              
+            </div>
+          </div>
+          End .dropdown-menu -->
+
+          <%}%>
+        </div>
+        <!-- End .cart-dropdown -->
+
+        
+          <a
+            href="/cart">
+            <span class="cart-nav"><i class="icon-shopping-cart ml-lg-3"></i><span class="d-none d-md-inline"> Cart</span></span>
+           
+          </a>
+
+      </div>
+      <!-- End .header-right -->
+    </div>
+    <!-- End .container -->
+  </div>
+  <!-- End .header-middle -->
+</header>
+<!-- End .header -->-
+<script>
+  function confirmSignOut() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log me out!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/logout";
+      }
+    });
+  }
+</script>

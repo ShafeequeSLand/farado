@@ -1,0 +1,240 @@
+<%- include("../layouts/adminHeader.ejs")%> <%-
+include("../layouts/adminSideBar.ejs")%>
+
+<div class="nk-content">
+  <div class="container-fluid">
+    <div class="nk-content-inner">
+      <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+          <div class="nk-block-between">
+            <div class="nk-block-head-content">
+              <h3 class="nk-block-title page-title">
+                Products <span class="text-grey">/ edit Product</span>
+              </h3>
+              <input type="hidden" name="user_id" id="id" value="<%=products._id %>" />
+              <div class="container-fluid mt-3">
+                <div class="row">
+                  <div class="col-md-12 mx-auto">
+                    <div class="card">
+                      <div class="card-body">
+                        <form
+                          
+                         id="saveeditproduct"
+                          enctype="multipart/form-data"
+                        >
+                        <input type="hidden" name="user_id" id="id" value="<%=products._id %>" />
+                          <div class="row g-3 mt-2">
+                            <div class="col-md-12">
+                              <div class="">
+                                <label for="product-title" class="form-label"
+                                  >Product Name</label
+                                >
+                                <input
+                                  type="text"
+                                  value="<%=products.productname%>"
+                                  name="productname"
+                                  id="product-title"
+                                  class="form-control"
+                                  
+                                />
+                                <p class="text-danger" id="product-title-error"> </p>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div>
+                                <label for="frameshape" class="form-label">Frame Shape</label>
+                                <select name="frameshape" id="frameshape" class="form-control" >
+                                  <option value="<%=products.frameshape%>"  selected><%=products.frameshape%></option>
+                                  <% category.forEach((value) => { %>
+                                    <option value="<%= value.categoryname %>"><%= value.categoryname %></option>
+                                  <% }) %>
+                                  <!-- Add more options as needed -->
+                                </select>
+                                <p class="text-danger" id="frameshape-error"> </p>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div>
+                                <label for="brand" class="form-label"
+                                  >Brand</label
+                                >
+                                <input
+                                  type="text"
+                                  name="brand"
+                                  value="<%=products.brand%>"
+                                  id="brand"
+                                  class="form-control"
+                                  
+                                />
+                                <p class="text-danger" id="brand-error"> </p>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div>
+                                <label for="stock" class="form-label"
+                                  >Stock</label
+                                >
+                                <input
+                                  type="number"
+                                  name="stock"
+                                  id="stock"
+                                  value="<%=products.stock%>"
+                                  class="form-control"
+                                  
+                                />
+                                <p class="text-danger" id="stock-error"> </p>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div>
+                                <label for="price" class="form-label"
+                                  >Price</label
+                                >
+                                <input
+                                  type="number"
+                                  name="price"
+                                  id="price"
+                                  value="<%=products.price%>"
+                                  class="form-control"
+                                  
+                                />
+                                <p class="text-danger" id="price-error"> </p>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div>
+                                <label for="description" class="form-label"
+                                  >Description</label
+                                >
+                                <textarea
+                                  name="description"
+                                  id="description"
+                                  class="form-control"
+                                  
+                                >
+                                    "<%=products.description%>"
+                                    </textarea
+                                >
+                                <p class="text-danger" id="description-error"> </p>
+                              </div>
+                            </div>
+
+                            <div class="col-12 row mt-4">
+                              <% for (let i = 0; i < 4; i++) { %>
+                                <div class="col-6 col-md-3 mb-3 rounded-image-preview">
+                                  <label class="image-label" for="imageInput<%= i + 1 %>">Image Slot <%= i + 1 %>
+                                    <div class="rounded-image-preview">
+                                      <img
+                                        id="imagePreview<%= i + 1 %>"
+                                        src="<%= products.images['image' + (i + 1)] ? '/static/productsImages/' + products.images['image' + (i + 1)] : '/static/admin/assets/images/dummy/dummyimage.jpg' %>"
+                                        alt="Preview"
+                                        name="images"
+                                      />
+                                    </div>
+                                    <input type="file" name="image<%= i + 1 %>" class="imageInput" id="imageInput<%= i + 1 %>" />
+                                  </label>
+                                </div>
+                              <% } %>
+                            </div>
+                            
+                            <div class="col-12">
+                              <button type="button" id="editsave-button" class="btn btn-primary">
+                                <em class="icon ni ni-plus"></em>
+                                <span>Update</span>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".imageInput").change(function () {
+        var input = this;
+        var imagePreview = $(input).siblings('.rounded-image-preview').children('img')[0];
+  
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+  
+          reader.onload = function (e) {
+            imagePreview.src = e.target.result;
+            $(imagePreview).show();
+          };
+  
+          reader.readAsDataURL(input.files[0]);
+        }
+      });
+    });
+  </script>
+
+
+<script src="/static/js/adminValidation.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const registrationForm = document.getElementById("saveeditproduct");
+    const signupButton = document.getElementById("editsave-button");
+
+    signupButton.addEventListener("click", function () {
+      
+      if (editproduct()) {
+        const formData = new FormData(registrationForm);
+
+  const id =document.getElementById("id");
+
+ 
+
+        fetch(`/admin/editproducts`, {
+          method: "POST",
+          body: formData,id,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.success) {
+              Swal.fire({
+                title: "Edit  Successfully",
+                text: "Your edited product has been added successfully.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => (window.location.href = "/admin/products"));
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+              title: "Error!",
+              text: "An unexpected error occurred. Please try again later.",
+              icon: "error",
+              showConfirmButton: false,
+                timer: 1500
+            });
+          });
+      }
+    });
+  });
+
+  
+</script>
+
+  <script src="/static/admin/assets/js/bundlee5ca.js?ver=3.2.3"></script>
+  <script src="/static/admin/assets/js/scriptse5ca.js?ver=3.2.3"></script>
+  <script src="/static/admin/assets/js/demo-settingse5ca.js?ver=3.2.3"></script>
+  <!-- Mirrored from dashlite.net/demo2/ecommerce/products.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Oct 2023 14:33:03 GMT -->
+</div>

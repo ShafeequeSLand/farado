@@ -1,0 +1,228 @@
+<%- include("../layouts/header.ejs")%>
+
+<!-- End .header -->
+
+<main class="main">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active" aria-current="page">sign Up</li>
+      </ol>
+    </div>
+    <!-- End .container -->
+  </nav>
+  <!-- End .breadcrumb-nav -->
+
+  <div
+    class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+    style="
+      background-image: url('/static/assets/images/backgrounds/login-bg.jpg');
+    "
+  >
+    <div class="form-box ">
+      <div class="form-tab text-center">
+        <h3>Register</h3>
+      </div>
+      <div
+        class="tab-pane fade show active"
+        id="register-2"
+        role="tabpanel"
+        aria-labelledby="register-tab-2"
+      >
+        <form id="registration-form">
+          <div class="form-group">
+            <label for="username">Username*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+            />
+            <p id="username-error" class="error-message"></p>
+          </div>
+          <div class="d-flex">
+            <div class="form-group w-100 w-lg-75">
+              <label for="firstname">First name*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstname"
+                name="firstname"
+              />
+              <p id="firstname-error" class="error-message"></p>
+            </div>
+            <div class="form-group w-100 w-lg-25 ml-3">
+              <label for="lastname">Last name*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname"
+                name="lastname"
+              />
+              <p id="lastname-error" class="error-message"></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Your email address*</label>
+            <input type="email" class="form-control" id="email" name="email" />
+
+            <p id="email-error" class="error-message"></p>
+          </div>
+          <div class="form-group">
+            <label for="mobile">Your mobile*</label>
+            <input type="tel" class="form-control" id="mobile" name="mobile" />
+            <p id="mobile-error" class="error-message"></p>
+          </div>
+          <div class="d-flex">
+            <div class="form-group w-100 w-lg-50">
+              <label for="password">Password*</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+              />
+              <p id="password-error" class="error-message"></p>
+            </div>
+            <div class="form-group w-100 w-lg-50 ml-5">
+              <label for="password-2">Re Password*</label>
+              <input
+                type="password"
+                class="form-control"
+                id="cpassword"
+                name="password_2"
+              />
+              <p id="cpassword-mismatch" class="error-message"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="refferal">Refferal ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="refferal"
+              name="refferal"
+            />
+          </div>
+          <small id="password-error" class="error-message text-danger"></small>
+          <div class="d-flex text-center">
+            <div class="form-group">
+              <button
+                type="button"
+                id="signup-button"
+                class="btn btn-outline-primary-2 w-75"
+              >
+                <span>SIGN UP</span>
+                <i class="icon-long-arrow-right"></i>
+              </button>
+              
+            </div>
+          </div>
+        </form>
+        <% if (typeof message !== "undefined") { %>
+
+        <div class="alert alert-secondary" role="alert">
+          <!-- Replace the message with your dynamic message -->
+          <%= message %>
+        </div>
+        <% } %>
+
+        <!-- End .form-choice -->
+
+        <!-- .End .tab-pane -->
+      </div>
+      <!-- End .tab-content -->
+    </div>
+    <!-- End .form-tab -->
+  </div>
+  <!-- End .container -->
+</main>
+<!-- End .main -->
+
+<script src="/static/js/validation.js"></script>
+<%- include("../layouts/userFooter.ejs")%>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const registrationForm = document.getElementById("registration-form");
+    const signupButton = document.getElementById("signup-button");
+
+    signupButton.addEventListener("click", function () {
+      if (validationSignup()) {
+        const formData = serialize(registrationForm);
+     
+
+        fetch("/signup", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.notMatchemail) {
+             
+              Swal.fire({
+                title: "Existing User!",
+                text: "This email is already in use. Please use a different email address.",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else if (data.notMatcthrefferal) {
+              Swal.fire({
+                title: "Referral Code Not Available!",
+                text: "The referral code is not valid.",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else if (data.success) {
+              
+              // Redirect to the verification page
+              window.location.href = "/verify";
+            }
+          })
+          .catch((error) => {
+            // Handle any unexpected errors
+            console.error("Error:", error);
+            // Show a generic error message to the user
+            Swal.fire({
+              title: "Error!",
+              text: "An unexpected error occurred. Please try again later.",
+              icon: "error",
+              showConfirmButton: false,
+                timer: 1500
+            });
+          });
+      }
+    });
+  });
+
+  function serialize(form) {
+    const formData = new FormData(form);
+    const serialized = Array.from(formData)
+      .map((entry) => {
+        return (
+          encodeURIComponent(entry[0]) + "=" + encodeURIComponent(entry[1])
+        );
+      })
+      .join("&");
+
+    return serialized;
+  }
+
+  function handleResponse(data) {}
+</script>
+
+<%-include("../layouts/footer.ejs")%>

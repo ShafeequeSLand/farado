@@ -1,0 +1,685 @@
+<%- include("../layouts/header.ejs")%>
+<div class="page-wrapper">
+  <%- include("../layouts/userNavbar.ejs")%>
+
+  <main class="main">
+    <div
+      class="page-header text-center"
+      style="background-image: url('/static/assets/images/page-header-bg.jpg')"
+    >
+      <div class="container">
+        <h1 class="page-title">Checkout<span>Shop</span></h1>
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+        </ol>
+      </div>
+      <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+      <div class="checkout">
+        <div class="container">
+          <form id="checkoutForm">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="accordion-summary-left" id="accordion-payment">
+                  <div class="card">
+                    <div class="card-header" id="heading-2">
+                      <h2 class="card-title">
+                        <a
+                          class="collapsed x"
+                          role="button"
+                          data-toggle="collapse"
+                          href="#collapse-2"
+                          aria-expanded="true"
+                          aria-controls="collapse-2"
+                        >
+                          <h4 >Select a delivery address</h4>
+                        </a>
+                      </h2>
+                    </div>
+                    <!-- End .card-header -->
+                    <div
+                      id="collapse-2"
+                      class="collapse show"
+                      aria-labelledby="heading-2"
+                      data-parent="#accordion-payment"
+                    >
+                      <div class="card-body">
+                        <% if (address && address.length !== 0) { for (let i =
+                        0; i < address.length; i++) { %>
+                        <div
+                          class=" address-col-checkout-main col-11 mt-5 mt-lg-5 ml-4 ml-sm-0 mt-lg-0 mr-lg-5 my-lg-5 d-flex justify-content-start"
+                        >
+                          <label class="address-radio-label">
+                            <div class="address-col-checkout ">
+                              <input
+                              id="selectedAddress"
+                                type="radio"
+                                name="selectedAddress"
+                                value="<%= address[i]._id %>"
+                                
+                              />
+                              <div class="address-details">
+                                <h6 class="show_address pl-5">
+                                  <strong><%= address[i].fullname %></strong>
+                                  <%= address[i].mobile %>, <%=
+                                  address[i].address %>, <%= address[i].locality
+                                  %>,
+                                  <br />
+                                  <%= address[i].city %>, <%= address[i].state
+                                  %>, <%= address[i].zipcode %>
+                                </h6>
+                              </div>
+                            </div>
+                          </label>
+                        </div>
+                        <% }} else{%>
+
+                          <div class="col-12 text-center my-5">
+                            <i class="fa-duotone fa-map-location-dot mb-2"></i>
+                            <h6>Add New Address</h6>
+                          </div>
+                          <%}%>
+
+                        <div class="d-flex justify-content-sm-end col-10">
+                        
+                          <a   id="address-radio-btn"
+                            class="collapsed x"
+                            role="button"
+                            data-toggle="collapse"
+                            href="#collapse-3"
+                            aria-expanded="false"
+                            aria-controls="collapse-3"
+                            
+                          >
+                            <button onclick="addresscheckout()"
+                          
+                              class="btn btn-outline-primary-2  btn-order mr-sm-5 mr-2"
+                            >
+                              Select this Address
+                            </button>
+                          </a>
+                         <a
+                            onclick="addressModal()"
+                            class="btn btn-outline-primary-2 btn-order checkout-btn" 
+
+                          >
+                            Add new Address</a>
+                        </div>
+                      </div>
+                      <!-- End .card-body -->
+                    </div>
+                    <!-- End .collapse -->
+                  </div>
+                  <!-- End .card -->
+
+                  <div class="card">
+                    <div class="card-header" id="heading-3">
+                      <h2 class="card-title">
+                        <a 
+                       
+                          class="collapsed"
+                          role="button"
+                          data-toggle="collapse"
+                          href="#collapse-3"
+                          aria-expanded="false"
+                          aria-controls="collapse-3"
+                        >
+                          <h4>Payment method</h4>
+                        </a>
+                      </h2>
+                    </div>
+                    <!-- End .card-header -->
+
+                    <div
+                  
+                      id="collapse-3"
+                      class="collapse"
+                      aria-labelledby="heading-3"
+                      data-parent="#accordion-payment"
+                    >
+                      <div class="card-body">
+                        <div class="text-dark row d-flex col-12 mx-5">
+                          <div class="col-md-5 payment-col">
+                            <label >
+                              <input
+                                type="radio"
+                                name="paymentType"
+                                value="COD"
+                              />
+                              Cash on Devlivery
+                            </label>
+                          </div>
+                          <div class="col-md-5 payment-col ml-md-4">
+                            <label>
+                              <input
+                                type="radio"
+                                name="paymentType"
+                                value="OnlinePayment"
+                              />
+                              Online payment
+                            </label>
+                          </div>
+                          <div class="col-md-11 mr-md-5 payment-col">
+                            <label>
+                              <input
+                                type="radio"
+                                name="paymentType"
+                                value="Wallet"
+                              />
+                              Wallet
+                              <img
+                                src="/static/assets/images/payments-summary.png"
+                                alt="payments cards"
+                              />
+                            </label>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-end mr-4">
+                          <a   id="payment-radio-btn"
+                            class="collapsed x"
+                            role="button"
+                            data-toggle="collapse"
+                            href="#collapse-4"
+                            aria-expanded="false"
+                            aria-controls="collapse-4"
+                          >
+                            <button onclick="paymentcheckout()"
+                              class="btn btn-outline-primary-2 btn-order mr-5"
+                            >
+                              Select this Method
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- End .card-body -->
+                    </div>
+                    <!-- End .collapse -->
+                  </div>
+                  <!-- End .card -->
+
+                  <div class="card">
+                    <div class="card-header" id="heading-4">
+                      <h2 class="card-title">
+                        <a
+                          class="collapsed"
+                          role="button"
+                          data-toggle="collapse"
+                          href="#collapse-4"
+                          aria-expanded="false"
+                          aria-controls="collapse-4"
+                        >
+                          <h4>Items and delivery</h4>
+                        </a>
+                      </h2>
+                    </div>
+                    <!-- End .card-header -->
+                    <div
+                      id="collapse-4"
+                      class="collapse"
+                      aria-labelledby="heading-4"
+                      data-parent="#accordion-payment"
+                    >
+                      <div
+                        class="card-body summary bg-light col-12 d-flex align-items-center flex-column rounded"
+                      >
+                        <%for(var i=0;i< cart?.products?.length;i++){%>
+                        <div class="row">
+                          <div class="m-5 col-sm-4 col-10">
+                            <!-- Use col-12 for full width on mobile -->
+                            <img
+                              class="w-100 h-auto w-75"
+                              src="/static/productsImages/<%= cart.products[i].product.images.image1 %>"
+                              alt=""
+                            />
+                          </div>
+
+                          <div class="mt-3 m-sm-1 m-5 col-sm-6 col-10">
+                            <!-- Use col-12 for full width on mobile -->
+                            <h5><%= cart.products[i].product.productname %></h5>
+                            <h6>
+                              ₹ <%=cart.products[i].product.discountprice==null?cart.products[i].product.price:cart.products[i].product.discountprice *
+                              cart.products[i].count %>
+                            </h6>
+                            <p class="justify-content-start text-justify">
+                              <%= cart.products[i].product.description %>
+                            </p>
+                            <br />
+                            <h6>Qty: <%= cart.products[i].count %></h6>
+                          </div>
+                        </div>
+
+                        <%}%>
+                        <hr />
+                        <div class="col-10">
+                          <h3 class="summary-title">Cart Total</h3>
+                          <!-- End .summary-title -->
+
+                          <table class="table table-summary">
+                            <tbody>
+                              <tr>
+                                <td>Subtotal:</td>
+                                <td id="subAmount"><%=totalAmount%>%></td>
+                              </tr>
+                              <!-- End .summary-subtotal -->
+                              <tr class="summary-shipping">
+                                <td>Shipping:</td>
+                                <td>Free</td>
+                              </tr>
+
+                              <!-- End .summary-shipping-estimate -->
+
+                              <tr class="summary-total">
+                                <td>Total:</td>
+                                <td id="totalAmount"><%=totalAmount%>%></td>
+                              </tr>
+                              <!-- End .summary-total -->
+                            </tbody>
+                          </table>
+
+                          <!-- End .table table-summary -->
+
+                          <button
+                            class="btn btn-outline-primary-2 btn-order btn-block"
+                            type="submit"
+                          >
+                            PROCEED TO CHECKOUT
+                          </button>
+
+                          <!-- End .summary -->
+                        </div>
+                      </div>
+                      <!-- End .card-body -->
+                    </div>
+                    <!-- End .collapse -->
+                  </div>
+                  <!-- End .card -->
+                </div>
+                <!-- End .accordion -->
+              </div>
+              <!-- End .col-lg-9 -->
+              
+              <aside class="col-lg-3 d-none d-md-inline">
+                <div class="summary">
+                  <h3 class="summary-title">Your Order</h3>
+                  <!-- End .summary-title -->
+
+                  <table class="table table-summary">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      
+
+                      
+                      <tr class="summary-subtotal">
+                        <td>Subtotal:</td>
+                        <td><%=totalAmount%></td>
+                      </tr>
+                      <!-- End .summary-subtotal -->
+                      <tr>
+                        <td>Shipping:</td>
+                        <td>Free shipping</td>
+                      </tr>
+                      <tr class="summary-total">
+                        <td>Total:</td>
+                        <td><%=totalAmount%></td>
+                      </tr>
+                      <!-- End .summary-total -->
+                    </tbody>
+                  </table>
+                  <!-- End .table table-summary -->
+
+                  <!-- End .accordion -->
+
+                 
+                </div>
+                <!-- End .summary -->
+              </aside>
+              <!-- End .col-lg-3 -->
+            </div>
+            <!-- End .row -->
+          </form>
+        </div>
+        <!-- End .container -->
+      </div>
+      <!-- End .checkout -->
+    </div>
+    <!-- End .page-content -->
+  </main>
+  <!-- End .main -->
+</div>
+<!-- End .page-wrapper -->
+
+<!-- Add this script block at the end of your HTML file -->
+<!-- ... (previous HTML code) ... -->
+<button
+  id="addAddresBTN"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+  hidden
+></button>
+
+<!-- Modal with centered layout -->
+
+<!-- Modal with centered layout -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content p-5 pt-3">
+    <span class="close" type="button" class="btn btn-primary " data-bs-dismiss="modal">&times;</span>
+    
+    <div class="modal-header d-flex justify-content-center align-items-center">
+      <h5 class="modal-title" id="exampleModalLabel">Add New Address</h5>
+
+    </div>
+    
+    <div class="modal-body">
+      <form id="addaddress-form">
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Full Name*</label>
+          <input type="text" class="form-control" id="fullname" name="fullname" >
+       <p class="error-message" id="fullname-error"></p>
+        </div>
+        
+        <div class="">
+          <label for="mobile" class="form-label">Mobile*</label>
+          <input type="text" class="form-control" id="mobile" name="mobile" >
+          <p class="error-message" id="mobile-error"></p>
+        </div>
+        
+        <div class="">
+          <label for="address" class="form-label">Address*</label>
+          <input type="text" class="form-control" id="address" name="address" >
+          <p class="error-message" id="address-error"></p>
+        </div>
+        
+        <div class="d-flex justify-content-center">
+          <div class=" col-8">
+            <label for="locality" class="form-label">Locality*</label>
+            <input type="text" class="form-control" id="locality" name="locality" >
+            <p class="error-message" id="locality-error"></p>
+          </div>
+          
+          <div class=" col-4">
+            <label for="zipcode" class="form-label">Zip Code*</label>
+            <input type="number" class="form-control" id="zipcode" name="zipcode" >
+            <p class="error-message" id="zipcode-error"></p>
+          </div>
+        </div>
+        
+        <div class="d-flex justify-content-center">
+          <div class=" col-6">
+            <label for="city" class="form-label">City*</label>
+            <input type="text" class="form-control" id="city" name="city" >
+            <p class="error-message" id="city-error"></p>
+          </div>
+          
+          <div class=" col-6">
+            <label for="state" class="form-label">State*</label>
+            <select class="form-control" id="state" name="state" >
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Odisha">Odisha</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+            <select class="form-control" id="state" name="state" >
+              <!-- Options for states -->
+            </select>
+            <p class="error-message" id="state-error"></p>
+          </div>
+        </div>
+        
+    </div>
+    
+    <div class="modal-footer d-flex justify-content-center">
+      <button type="button" class="btn btn-primary "  data-bs-dismiss="modal">Close</button>
+      <button type="button" id="addnew-address" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+    
+  </div>
+</div>
+</div>
+
+<!-- Modal with centered and scrollable layout -->
+
+<!-- Modal with centered and scrollable layout -->
+
+
+
+<script src="path/to/inputSpinnerPlugin.js"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const registrationForm = document.getElementById("addaddress-form");
+    const signupButton = document.getElementById("addnew-address");
+
+    signupButton.addEventListener("click", function () {
+      if (validationAddress()) {
+        const formData = serialize(registrationForm);
+
+
+        fetch("/newaddress", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.success) {
+             
+              Swal.fire({
+                title: "Added Successfully",
+                text: "Your new address has been added successfully.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            })
+            .then (() =>  window.location.href = "/checkout")
+            }
+          })
+          .catch((error) => {
+            // Handle any unexpected errors
+            console.error("Error:", error);
+            // Show a generic error message to the user
+            Swal.fire({
+              title: "Error!",
+              text: "An unexpected error occurred. Please try again later.",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          });
+      }
+    });
+  });
+
+  function serialize(form) {
+    const formData = new FormData(form);
+    const serialized = Array.from(formData)
+      .map((entry) => {
+        return (
+          encodeURIComponent(entry[0]) + "=" + encodeURIComponent(entry[1])
+        );
+      })
+      .join("&");
+
+    return serialized;
+  }
+
+  function handleResponse(data) {}
+</script>
+
+<script src="/static/js/validation.js"></script>
+
+
+<script>
+  function addressModal() {
+    document.getElementById("addAddresBTN").click();
+  }
+  // document.getElementById("addressModal").addEventListener('click', ()=>{
+  // })
+</script>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/static/js/Validation.js"></script>
+
+<script>
+  document.getElementById("checkoutForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+if (checkoutForm()){
+  
+
+    $.ajax({
+      url: "/verify-payment",
+      method: "post",
+      data: $("#checkoutForm").serialize(),
+      success: function (response) {
+        if (response.outOfStock) {
+          Swal.fire({
+            icon: "error",
+            title: "Some products are out of stock!",
+            html: "The following products are out of stock:",
+            showConfirmButton: false,
+      timer: 1500
+          });
+        } else if (response.cod) {
+          window.location.href = `/success-payment?id=${response.newOrderId}`;
+
+        } else if (response.Wallet) {
+          window.location.href = `/success-payment?id=${response.newOrderId}`;
+        } else if (response.online) {
+          
+          var options = {
+            key: response.key_id,
+            amount: response.amount,
+            currency: "INR",
+            name: "Farado",
+            description: "Test Transaction",
+            image:"/static/logo/favicon.png",
+            order_id: response.order_id,
+            handler: function (res) {
+              
+
+              fetch('/verifyonlinepayment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ response:res,data:response }),
+                })
+
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON in the response
+              })
+              .then(data => {
+               if (data.online) {
+                window.location.href = `/success-payment?id=${response.newOrderId}`;
+               }
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
+            },
+            prefill: {
+              name: response.name,
+              email: response.email,
+              contact: response.contact,
+            },
+            notes: {
+              address: "Razorpay Corporate Office",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          var rzp1 = new Razorpay(options);
+          
+          rzp1.on("payment.failed", function (response) {
+          
+          });
+          rzp1.open();
+         
+        } else if (response.infuentbalance) {
+          swal.fire({
+            title: "Insufficient balance",
+            text: "Insufficient balance In Your wallet.",
+            icon: "warning",
+            showConfirmButton: false,
+             timer: 1500
+          });
+        } else{
+          alert(err.message);
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX Request Error:", error);
+      },
+    });
+  
+  }
+  
+
+  });
+</script>
+<!-- Include SweetAlert library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+
+<%- include("../layouts/userFooter.ejs")%> <%-
+include("../layouts/userFooter2.ejs")%> <%- include("../layouts/footer.ejs")%>
+ 

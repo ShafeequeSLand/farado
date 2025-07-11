@@ -1,0 +1,695 @@
+<%- include("../layouts/adminHeader.ejs")%> <%-
+include("../layouts/adminSideBar.ejs")%>
+
+
+          <div class="nk-content">
+            <div class="container-fluid">
+              <input type="hidden" value="<%= JSON.stringify(data) %>"id="data">
+              <div class="nk-content-inner">
+                <div class="nk-content-body">
+                  <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                      <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Overview</h3>
+                      </div>
+                     
+                    </div>
+                  </div>
+                  <div class="nk-block">
+                    <div class="row g-gs">
+                      <!-- <div class="col-xxl-6">
+                        <div class="row g-gs">
+                          <div class="col-lg-6 col-xxl-12">
+                            <div class="card">
+                              <div class="card-inner">
+                                <div class="card-title-group align-start mb-2">
+                                  <div class="card-title">
+                                    <h6 class="title">Sales Revenue</h6>
+                                    <p>
+                                      In last 30 days revenue from subscription.
+                                    </p>
+                                  </div>
+                                  <div class="card-tools">
+                                    <em
+                                      class="card-hint icon ni ni-help-fill"
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="left"
+                                      title="Revenue from subscription"
+                                    ></em>
+                                  </div>
+                                </div>
+                                <div
+                                  class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap"
+                                >
+                                  <div
+                                    class="nk-sale-data-group flex-md-nowrap g-4"
+                                  >
+                                    <div class="nk-sale-data">
+                                      <span class="amount"
+                                        >14,299.59
+                                        <span class="change down text-danger"
+                                          ><em
+                                            class="icon ni ni-arrow-long-down"
+                                          ></em
+                                          >16.93%</span
+                                        ></span
+                                      ><span class="sub-title">This Month</span>
+                                    </div>
+                                    <div class="nk-sale-data">
+                                      <span class="amount"
+                                        >7,299.59
+                                        <span class="change up text-success"
+                                          ><em
+                                            class="icon ni ni-arrow-long-up"
+                                          ></em
+                                          >4.26%</span
+                                        ></span
+                                      ><span class="sub-title">This Week</span>
+                                    </div>
+                                  </div>
+                                  <div class="nk-sales-ck sales-revenue">
+                                    <canvas
+                                      class="sales-bar-chart"
+                                      id="salesRevenue"
+                                    ></canvas>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-xxl-12">
+                            <div class="row g-gs">
+                              <div class="col-sm-6 col-lg-12 col-xxl-6">
+                                <div class="card">
+                                  <div class="card-inner">
+                                    <div
+                                      class="card-title-group align-start mb-2"
+                                    >
+                                      <div class="card-title">
+                                        <h6 class="title">
+                                          Active Subscriptions
+                                        </h6>
+                                      </div>
+                                      <div class="card-tools">
+                                        <em
+                                          class="card-hint icon ni ni-help-fill"
+                                          data-bs-toggle="tooltip"
+                                          data-bs-placement="left"
+                                          title="Total active subscription"
+                                        ></em>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="align-end flex-sm-wrap g-4 flex-md-nowrap"
+                                    >
+                                      <div class="nk-sale-data">
+                                        <span class="amount">9.69K</span
+                                        ><span class="sub-title"
+                                          ><span class="change down text-danger"
+                                            ><em
+                                              class="icon ni ni-arrow-long-down"
+                                            ></em
+                                            >1.93%</span
+                                          >since last month</span
+                                        >
+                                      </div>
+                                      <div class="nk-sales-ck">
+                                        <canvas
+                                          class="sales-bar-chart"
+                                          id="activeSubscription"
+                                        ></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-6 col-lg-12 col-xxl-6">
+                                <div class="card">
+                                  <div class="card-inner">
+                                    <div
+                                      class="card-title-group align-start mb-2"
+                                    >
+                                      <div class="card-title">
+                                        <h6 class="title">Avg Subscriptions</h6>
+                                      </div>
+                                      <div class="card-tools">
+                                        <em
+                                          class="card-hint icon ni ni-help-fill"
+                                          data-bs-toggle="tooltip"
+                                          data-bs-placement="left"
+                                          title="Daily Avg. subscription"
+                                        ></em>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="align-end flex-sm-wrap g-4 flex-md-nowrap"
+                                    >
+                                      <div class="nk-sale-data">
+                                        <span class="amount">346.2</span
+                                        ><span class="sub-title"
+                                          ><span class="change up text-success"
+                                            ><em
+                                              class="icon ni ni-arrow-long-up"
+                                            ></em
+                                            >2.45%</span
+                                          >since last week</span
+                                        >
+                                      </div>
+                                      <div class="nk-sales-ck">
+                                        <canvas
+                                          class="sales-bar-chart"
+                                          id="totalSubscription"
+                                        ></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                       
+                     
+                      <div class="col-xxl-8">
+                        <div class="card card-full">
+                          <div class="card-inner">
+                            <div class="card-title-group">
+                              <div class="card-title">
+                                <h6 class="title">
+                                  <span class="me-2">Transaction</span>
+                                  <a href="/admin/orders" class="link d-none d-sm-inline"
+                                    >See History</a
+                                  >
+                                </h6>
+                              </div>
+                            
+                             
+                              
+                              <div class="card-tools">
+                                <button
+                                type="button"
+                                class="btn btn-primary me-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalDefault"
+                              >
+                                Filter
+                              </button>
+                                <div class="dropdown">
+                                  <a
+                                    href="#"
+                                    class="btn btn-primary btn-dim d-none d-sm-inline-flex"
+                                    data-bs-toggle="dropdown"
+                                    ><em class="icon ni ni-download-cloud"></em
+                                    ><span
+                                      ><span class="d-none d-md-inline"
+                                        >Download</span
+                                      >
+                                      Report</span
+                                    ></a
+                                  ><a
+                                    href="#"
+                                    class="btn btn-icon btn-primary btn-dim d-sm-none"
+                                    data-bs-toggle="dropdown"
+                                    ><em class="icon ni ni-download-cloud"></em
+                                  ></a>
+                                  <div class="dropdown-menu dropdown-menu-end">
+                                    <ul class="link-list-opt no-bdr">
+                                      <li>
+                                        <a href="javascript:void(0);" onclick="exportToExcel()">
+                                          <em class="icon ni ni-file-xls"></em><span>Export to Excel</span>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="javascript:void(0);" onclick="exportTopdf()"
+                                          ><em class="icon ni ni-file-pdf"></em><span>Export to PDF</span></a
+                                        >
+                                      </li>
+                                    
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-inner p-0 border-top">
+                            <div class="nk-tb-list nk-tb-orders">
+                              <div class="nk-tb-item nk-tb-head">
+                                <div class="nk-tb-col">
+                                  <span>Order No.</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-sm">
+                                  <span>Customer</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-md">
+                                  <span>Date</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                  <span>delivery</span>
+                                </div>
+                                <div class="nk-tb-col"><span>Amount</span></div>
+                                <div class="nk-tb-col tb-col-md">
+                                  <span>Items</span>
+                                </div>
+                                
+                                <div class="nk-tb-col">
+                                  <span class="d-none d-sm-inline">Status</span>
+                                </div>
+                                <div class="nk-tb-col"><span>&nbsp;</span></div>
+                              </div>
+
+                              <%if(order.length>0){ order.forEach((value)=>{%>
+                              <div class="nk-tb-item">
+                                <div class="nk-tb-col">
+                                  <span class="tb-lead"
+                                    ><a href="/admin/allorderitems?orderId=<%=value.orderId%>"><%=value.orderId%></a></span
+                                  >
+                                </div>
+                                <div class="nk-tb-col tb-col-sm">
+                                  <div class="user-card">
+                                    <div
+                                      class="user-avatar user-avatar-sm bg-purple"
+                                    >
+                                    <span
+                                    ><%=value.user.firstname.charAt(0).toUpperCase() +
+                                    value.user.lastname.charAt(0).toUpperCase()%></span>
+                                    </div>
+                                    <div class="user-name">
+                                      <span class="tb-lead"
+                                        ><%=value.user.firstname%> <%=value.user.lastname%></span
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="nk-tb-col tb-col-md">
+                                  <span class="tb-sub"><%= moment(value.orderDate).format("DD/MM/YYYY") %>
+                                  </span>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                  <span class="tb-sub text-primary"
+                                    ><%= moment(value.deliveryDate).format("DD/MM/YYYY") %></span
+                                  >
+                                </div>
+                                <div class="nk-tb-col">
+                                  <span class="tb-sub tb-amount"
+                                    ><%=value.amount%> <span>INR</span></span
+                                  >
+                                </div>
+                                <div class="nk-tb-col tb-col-md">
+                                  <span class="tb-sub"><%= value.products.length %>
+                                  </span>
+                                </div>
+                                <div class="nk-tb-col">
+                                  <% if (value.paymentMethod === "online") { %>
+                                    <span class="badge badge-dot badge-dot-xs bg-success">Online</span>
+                                  <% } else if (value.paymentMethod === "Wallet") { %>
+                                    <span class="badge badge-dot badge-dot-xs bg-primary">Wallet</span>
+                                  <% }else if (value.paymentMethod === "pending"){%>
+                                    <span class="badge badge-dot badge-dot-xs bg-danger">pending</span>
+                                  <% } else { %>
+                                    <span class="badge badge-dot badge-dot-xs bg-warning">Cash on Delivery</span>
+                                  <% } %>
+                                  
+                                  
+                                </div>
+                                <div class="nk-tb-col nk-tb-col-action">
+                                
+                                </div>
+                              </div>
+                            
+                              <%})}else{%>
+                              
+                                <div class="d-flex p-5 justify-content-center">
+                                  <h4>Orders not Available</h4>
+      
+                                </div>
+                                <%}%>
+                              </div>
+                          </div>
+                          <div
+                            class="card-inner-sm border-top text-center d-sm-none"
+                          >
+                            <a href="#" class="btn btn-link btn-block"
+                              >See History</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <% let queryString = ''; %>
+
+                      <nav>
+                        <ul class="pagination justify-content-center">
+                          <% if (previospage > 0) { %>
+                            <% queryString = `?page=${previospage}`; %>
+                            <li class="page-item">
+                              <a class="page-link" href="<%= queryString %>&startDate=<%= startDate %>&endDate=<%= endDate %>">
+                                <em class="icon ni ni-chevrons-left"></em>
+                              </a>
+                            </li>
+                          <% } %>
+                      
+                    
+                      
+                          <% for (let i =1; i <= totalPages; i++) { %>
+                            <% queryString = `?page=${i}`; %>
+                            <li class="page-item">
+                              <a class="page-link" href="<%= queryString %>&startDate=<%= startDate %>&endDate=<%= endDate %>">
+                                <%= i %>
+                              </a>
+                            </li>
+                          <% } %>
+                       
+                          <% if (currentPage < totalPages) { %>
+                            <% queryString = `?page=${nextpage}`; %>
+                            <li class="page-item">
+                              <a class="page-link" href="<%= queryString %>&startDate=<%= startDate %>&endDate=<%= endDate %>">
+                                <em class="icon ni ni-chevrons-right"></em>
+                              </a>
+                            </li>
+                          <% } %>
+                        </ul>
+                      </nav>
+                      
+                      
+                    <div class="col-xxl-6">
+                      <div class="card h-100">
+                        <div class="card-inner">
+                          <div class="card-title-group align-start gx-3 mb-3">
+                            <div class="card-title">
+                              <h6 class="title">Sales Overview</h6>
+                              <p>
+                                In 30 days sales of product subscription.
+                                <a href="#">See Details</a>
+                              </p>
+                            </div>
+                          
+                          </div>
+                          <div
+                            class="nk-sale-data-group align-center justify-between gy-3 gx-5"
+                          >
+                            <div class="nk-sale-data">
+                              <span class="amount"> ₹ <%=data.totalSaleForMonth%></span>
+                            </div>
+                            <div class="nk-sale-data">
+                              <span class="amount sm"
+                                ><%=totalData.UserData.length%> <small>Subscribers</small></span
+                              >
+                            </div>
+                          </div>
+                          <div class="nk-sales-ck large pt-4">
+                            <canvas
+                              class="sales-overview-chart"
+                              id="salesOverview"
+                            ></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                
+
+
+                      <div class="col-md-6 col-xxl-4">
+                        <div class="card card-full">
+                          <div class="card-inner border-bottom">
+                            <div class="card-title-group">
+                              <div class="card-title">
+                                <h6 class="title">Trendy Products</h6>
+                              </div>
+                              <div class="card-tools">
+                                <ul class="card-tools-nav">
+                                  
+                                  <li class="active">
+                                    <a href="/admin/products"><span>All</span></a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <ul class="nk-activity">
+                            <%mostOrderedProducts.forEach((value)=>{%>
+                            <li class="nk-activity-item">
+                              <div
+                                class="nk-activity-media user-avatar bg-success"
+                              >
+                                <img src="/static/productsImages/<%=value.mostOrderedProduct.images.image1%>" alt="" />
+                              </div>
+                              <div class="nk-activity-data">
+                                <div class="label">
+                                 <%=value.mostOrderedProduct.productname%>
+                                </div>
+                                <span class="time"><%=value.totalQuantity%></span>
+                              </div>
+                            </li>
+                            <%})%>
+                           
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xxl-4">
+                        <div class="card card-full">
+                          <div class="card-inner-group">
+                            <div class="card-inner">
+                              <div class="card-title-group">
+                                <div class="card-title">
+                                  <h6 class="title">New Users</h6>
+                                </div>
+                                <div class="card-tools">
+                                  <a href="/admin/customers" class="link"
+                                    >View All</a
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                              <%newUsers.forEach((value)=>{%>
+                            <div class="card-inner card-inner-md">
+                              <div class="user-card">
+                                <div class="user-avatar bg-primary-dim">
+                                  <span><%=value.firstname.charAt(0).toUpperCase() +
+                                    value.lastname.charAt(0).toUpperCase()%></span>
+                                </div>
+                                <div class="user-info">
+                                  <span class="lead-text"><%=value.firstname +" "+
+                                    value.lastname%></span
+                                  ><span class="sub-text"
+                                    ><%=value.email%></span
+                                  >
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <%})%>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+   <!-- jQuery -->
+
+
+<!-- Bootstrap CSS and JavaScript -->
+
+                    <!-- Modal Content Code -->
+                    <div class="modal fade" tabindex="-1" id="modalDefault">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Filter Orders</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body text-center">
+                            <div class="form-group">
+                              <div class="form-control-wrap">
+                                <div class="input-daterange date-picker-range input-group">
+                                  <input type="text" id="startDate" class="form-control" placeholder="Start date" />
+                                  <div class="input-group-append">
+                                    <span class="input-group-text">TO</span>
+                                  </div>
+                                  <input type="text" id="endDate" class="form-control" placeholder="End date" />
+                                </div>
+                              </div>
+                            </div>
+                            <ul>
+                            <div class="dropdown mb-2 ">
+                              <select name="action" id="action" class="form-control" >
+                                <option value="" disabled selected>action</option>
+                        
+                                  <option value="all">All</option>
+                                  <option value="Cash on Delivery">Cash on Delivery</option>
+                                  <option value="online">online</option>
+                                  <option value="Wallet">Wallet</option>
+                                  <option value="pending">pending</option>
+                                <!-- Add more options as needed -->
+                              </select>
+                            </div>
+                            <div class="btn-group">
+                              <a href="#" class="btn btn-outline-light mx-1" onclick="todayReport()">Today Report</a>
+                              <a href="#" class="btn btn-outline-light mx-1" onclick="yesterdayReport()">Yesterday Report</a>
+                            </div>
+
+                            <div class="btn-group mt-2">
+                              <a href="#" class="btn btn-outline-light mx-1" onclick="sendDatesToServer()">Filter</a>
+                              <a href="#" class="btn btn-outline-light mx-1" onclick="clearDates()">Clear</a>
+                            </div>
+                          </div>
+                          <div class="modal-footer bg-light">
+                            <span class="sub-text">You can filter and  export to Excel and PDF</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <script>
+                      // Function to get query parameters from the URL
+                      function getQueryParam(name) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(name);
+                      }
+                    
+                      // Function to set the value of an element
+                      function setElementValue(elementId, value) {
+                        document.getElementById(elementId).value = value;
+                      }
+                    
+                      // Function to handle yesterday report
+                      function yesterdayReport() {
+                        const yesterdayDate = new Date();
+                        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                    
+                        // Get the selected dates
+                        const startDate = yesterdayDate.toISOString().split('T')[0];
+                        const endDate = yesterdayDate.toISOString().split('T')[0];
+                        const action = document.getElementById('action').value;
+                    
+                        const queryString = `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&action=${encodeURIComponent(action)}`;
+                    
+                        // Append the query string to the current URL
+                        window.location.href = window.location.pathname + queryString;
+                      }
+                    
+                      // Function to handle today report
+                      function todayReport() {
+                        const currentDate = new Date();
+                    
+                        // Get the selected dates
+                        const startDate = currentDate.toISOString().split('T')[0];
+                        const endDate = currentDate.toISOString().split('T')[0];
+                        const action = document.getElementById('action').value;
+                    
+                        const queryString = `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&action=${encodeURIComponent(action)}`;
+                    
+                        // Append the query string to the current URL
+                        window.location.href = window.location.pathname + queryString;
+                      }
+                    
+                      // Function to send dates to the server and redirect
+                      function sendDatesToServer() {
+                        // Get the selected dates
+                        const startDate = document.getElementById('startDate').value;
+                        const endDate = document.getElementById('endDate').value;
+                        const action = document.getElementById('action').value;
+                    
+                        // Save the selected dates to localStorage (if needed)
+                    
+                        // Create a query string with the selected dates
+                        const queryString = `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&action=${encodeURIComponent(action)}`;
+                    
+                        // Append the query string to the current URL
+                        window.location.href = window.location.pathname + queryString;
+                      }
+                    
+                      // Function to clear dates
+                      function clearDates() {
+                        document.getElementById('startDate').value = '';
+                        document.getElementById('endDate').value = '';
+                        document.getElementById('action').value = '';
+                      }
+                    
+                      // Add event listeners for buttons
+                    
+                    
+                      // Retrieve and set values from query parameters
+                      const startDateParam = getQueryParam('startDate');
+                      const endDateParam = getQueryParam('endDate');
+                      const actionParam = getQueryParam('action');
+                    
+                      if (startDateParam) {
+                        setElementValue('startDate', decodeURIComponent(startDateParam));
+                      }
+                    
+                      if (endDateParam) {
+                        setElementValue('endDate', decodeURIComponent(endDateParam));
+                      }
+                    
+                      if (actionParam) {
+                        setElementValue('action', decodeURIComponent(actionParam));
+                      }
+                    </script>
+                    
+
+    <script>
+
+function exportToExcel() {
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  
+    // Get the selected dates
+    const startDate = urlParams.get('startDate');
+    
+    const endDate = urlParams.get('endDate');
+    const action=urlParams.get('action');
+    // Create a query string with the selected dates
+    const queryString = `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&action=${encodeURIComponent(action)}`;
+
+    // Construct the export URL with the query string
+    const exportUrl = '/admin/salesexportexcel' + queryString;
+
+    // Redirect to the export URL
+    window.location.href = exportUrl;
+  }
+    </script>
+    
+  
+    <script>
+      function exportTopdf() {
+    // Get the selected dates
+    const urlParams = new URLSearchParams(window.location.search);
+  const date = urlParams.get('startDate');
+ 
+    const startDate =  urlParams.get('startDate');
+    
+    const endDate =  urlParams.get('endDate');
+    const action=urlParams.get('action');
+
+    // Create a query string with the selected dates
+    const queryString = `?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&action=${encodeURIComponent(action)}`;
+
+    // Construct the export URL with the query string
+    const exportUrl = '/admin/salesexportpdf' + queryString;
+
+    // Redirect to the export URL
+    window.location.href = exportUrl;
+  }
+    
+    </script>
+    <script src="/static/admin/assets/js/bundlee5ca.js?ver=3.2.3"></script>
+    <script src="/static/admin/assets/js/scriptse5ca.js?ver=3.2.3"></script>
+   
+    <script src="/static/admin/assets/js/charts/chart-salese5ca.js?ver=3.2.3"></script>
+    <script src="/static/admin/assets/js/demo-settingse5ca.js?ver=3.2.3"></script>
+  </body>
+  <!-- Mirrored fr/static/admin/om dashlite.net/demo2/index-sales.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Oct 2023 14:32:25 GMT -->
+</html>
