@@ -10,7 +10,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/home">Home</a></li>
                         <li class="breadcrumb-item"><a href="/allproducts">Products</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        <li class="breadcrumb-item active" aria-current="page"><%= product.productname %></li>
                     </ol>
 
                     <nav class="product-pager ml-auto" aria-label="Product">
@@ -37,9 +37,9 @@
                                         <figure class="product-main-image">
                                             <img id="product-zoom" src="/static/productsImages/<%=product.images.image1%>" data-zoom-image="/static/productsImages/<%=product.images.image1%>" alt="product image">
 
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                                <i class="icon-arrows"></i>
-                                            </a>
+                                                <a href="" id="btn-product-gallery" class="btn-product-gallery">
+                                                    <i class="icon-arrows"></i>
+                                                </a>
                                         </figure><!-- End .product-main-image -->
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
@@ -47,7 +47,7 @@
                                                 <img src="/static/productsImages/<%=product.images.image1%>" alt="product side">
                                             </a>
 
-                                            <a class="product-gallery-item" href="#" data-image="//static/productsImages/<%=product.images.image2%>" data-zoom-image="/static/productsImages/<%=product.images.image2%>">
+                                            <a class="product-gallery-item" href="#" data-image="/static/productsImages/<%=product.images.image2%>" data-zoom-image="/static/productsImages/<%=product.images.image2%>">
                                                 <img src="/static/productsImages/<%=product.images.image2%>" alt="product cross">
                                             </a>
 
@@ -277,7 +277,7 @@
                         <div class="product product-7 text-center">
                             <figure class="product-media">
                                 <span class="product-label label-new">New</span>
-                                <a href="product.html">
+                                <a href="/product?id=<%= value._id %>">
                                     <img src="/static/productsImages/<%=value.images.image1%>" alt="Product image" class="product-image">
                                 </a>
 
@@ -296,7 +296,7 @@
                                 <div class="product-cat">
                                     <a href="#"><%= value.frameshape %></a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html"><%= value.productname %></a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="/product?id=<%= value._id %>"><%= value.productname %></a></h3><!-- End .product-title -->
                                 <div class="product-price">
                                     ₹ <%= value.price %>
                                 </div><!-- End .product-price -->
