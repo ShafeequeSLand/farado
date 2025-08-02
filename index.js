@@ -3,8 +3,11 @@ const express = require("express");
 const morgan = require("morgan");
 
 const mongoose = require("mongoose");
+console.log(process.env.MONGODB);
+
 // mongoose.connect("mongodb://127.0.0.1:27017/frmecart");
-mongoose.connect("mongodb+srv://shafeequemk80:1L3SlbG4OC7wYevT@farado-db.t8xnvt4.mongodb.net/?retryWrites=true&w=majority");
+ mongoose.connect(process.env.MONGODB);
+//mongoose.connect("mongodb://shafeequemk80:shafeequemk80@farado-db.t8xnvt4.mongodb.net/?retryWrites=true&w=majority&appName=farado-db")
 
 const app = express();
 const path = require("path");
@@ -15,6 +18,7 @@ const admin_route = require("./routes/adminRoute");
 
 const bodyparser = require("body-parser");
 const nocache = require("nocache");
+const { log } = require("console");
 
 
 app.use("/static", express.static(path.join(__dirname, "public")));
